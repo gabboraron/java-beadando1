@@ -1,4 +1,7 @@
-import bank.*;
+package financial.person;
+
+import financial.bank.Bank;
+
 
 public class Customer{
 	
@@ -10,7 +13,7 @@ public class Customer{
 	
 	//KONSTRUKTOROK
 	private Customer(String name, int birthYear, Bank bank){				  // ellenőrzés nélkül beállítja az adattagokat a megadott értékekre
-		amount = 0;
+		this.amount = 0;
 		this.name = name;
 		this.birthYear = birthYear;
 		this.bank = bank;
@@ -62,5 +65,6 @@ public class Customer{
 		if((birthYear<1918) || (1998<birthYear)){
 			everyCriteriaIsOK = false;
 		}
+		return new Customer(name, birthYear, Bank.valueOf(bankName));
 	}
 }

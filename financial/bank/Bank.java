@@ -1,5 +1,5 @@
-package bank;
+package financial.bank;
 
-public enum Bank {
+public enum Bank{
 	BB, OTP, Erste, CIB, Raiffeisen, Citibank, FHB, MKB, UniCredit
 }
