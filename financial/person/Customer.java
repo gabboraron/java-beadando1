@@ -20,12 +20,12 @@ public class Customer{
 	}
 	
 	//METÓDUSOK
-	public Customer makeCustomer(String name, int birthYear, String bankName){// ellenőrzi a paramétereket / létrehozza a megfelelő Customer objektumot és visszaadja
+	public static Customer makeCustomer(String name, int birthYear, String bankName){ // ellenőrzi a paramétereket / létrehozza a megfelelő Customer objektumot és visszaadja
 		boolean everyCriteriaIsOK = true;
 		
-		boolean hasntDigit = name.matches("[a-zA-Z]+");
+		boolean hasntDigit = name.matches("[a-zA-Z]+");					//A név csak az angol abc betűiből és szóközből állhat
 		if(hasntDigit){
-			int nrOfSpaces = 0;
+			int nrOfSpaces = 0;											// pontosan egy szóköz választja el egymástól
 			for (int i = 0; i < name.length(); i++) {
 				if (name.charAt(i) == ' ') {
 					++nrOfSpaces;
@@ -34,15 +34,15 @@ public class Customer{
 			
 			if(nrOfSpaces<2){
 				String[] parts = name.split(" ");
-				if((parts.length>1) && (parts.length<5)){
+				if((parts.length>1) && (parts.length<5)){				//A név legalább 2, legfeljebb 4 részből áll
 					boolean notEnoughChars = false;
 					for(String part : parts){
-						if((part.length() < 3) || (Character.isLowerCase(part.charAt(0)))){
+						if((part.length() < 3) || (Character.isLowerCase(part.charAt(0)))){		//minden rész legalább három karakter hosszú, nagybetűvel kezdődik
 							notEnoughChars = true;
 						}
 						if(!notEnoughChars){
 							for (int i = 1; i < part.length(); i++) {
-								if(Character.isUpperCase(part.charAt(i))){
+								if(Character.isUpperCase(part.charAt(i))){						//utána csak kisbetű áll
 									notEnoughChars = true;
 								}
 							}
@@ -62,9 +62,48 @@ public class Customer{
 			everyCriteriaIsOK = false;
 		}
 		
-		if((birthYear<1918) || (1998<birthYear)){
+		if((birthYear<1918) || (1998<birthYear)){							//A születési évnek 1918 és 1998 közöttinek kell lennie, az 1918 és az 1998 értéket is felveheti
 			everyCriteriaIsOK = false;
 		}
-		return new Customer(name, birthYear, Bank.valueOf(bankName));
+		
+		if(everyCriteriaIsOK) {
+			try{
+				return new Customer(name, birthYear, Bank.valueOf(bankName));
+			} catch (IllegalArgumentException e) {
+				System.err.println("Bad arguments.");
+			}
+		}
+		return null;
 	}
+
+	//GETTEREK
+	public String getName(){
+		return name;
+	}
+
+	public Bank getBank(){
+		return bank;
+	}
+
+	public int getAmount(){
+		return amount;
+	}
+
+	public void decreaseAmount(){
+		--amount;
+	}
+
+	public void increaseAmount(){
+		++amount;
+	}
+
+	public String toString(){
+		return (name + ": " + amount);
+	}
+
+	/*
+	public static void main(String[] args){
+		System.out.println("AVAVAVA");
+	}
+	*/
 }
